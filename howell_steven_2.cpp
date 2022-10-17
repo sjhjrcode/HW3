@@ -9,13 +9,18 @@ using namespace std;
 
 
 
+int hor = 0;
+int ver = 0;
+
 void PrintOut(int *arr, int i, int j, int m, int n, int *path, int pi)
 {
 
     if (i == m - 1)
     {
-        for (int k = j; k < n; k++)
+        for (int k = j; k < n; k++) {
             path[pi + k - j] = *((arr + i * n) + k);
+            //cout<<*((arr + i * n) + k)<<endl;
+        }
         for (int l = 0; l < pi + n - j; l++)
             cout << path[l] << " ";
         cout << endl;
@@ -45,13 +50,131 @@ void PrintOut(int *arr, int i, int j, int m, int n, int *path, int pi)
     PrintOut(arr, i + 1, j + 1, m, n, path, pi + 1);
 }
 
+
+
+
+
+
+void PrintOut2(int *arr, vector<vector<int> > mapping, int i, int j, int m, int n, vector<int> path = {})
+{
+
+    if (i < 0 || j < 0 || i >= m ||
+        j >= n || mapping[i][j] == 1)
+        return;
+    if(i == m-1 && j==n-1){
+        path.push_back(*(arr + i * n + j));
+
+        for(int tmp = 0; tmp < path.size();tmp++){
+            cout<<path[tmp]<<"";
+        }
+        cout<<endl;
+        return;
+
+    }
+
+    mapping[i][j] = 1;
+
+    // Print all the paths that are possible after moving down
+    PrintOut2(arr,mapping, i + 1, j, m, n, path);
+
+    // Print all the paths that are possible after moving right
+    PrintOut2(arr,mapping, i, j + 1, m, n, path);
+
+    // Print all the paths that are possible after moving diagonal
+    PrintOut2(arr,mapping, i + 1, j + 1, m, n, path);
+
+    path.pop_back();
+    mapping[i][j] = 0;
+}
+
+
+void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
+{
+
+    /*
+    if (i < 0 || j < 0 || i >= m ||
+        j >= n || mapping[i][j] == 1)
+        return;
+    if(i == m-1 && j==n-1){
+        path.push_back(arr[i][j]);
+
+        for(int tmp = 0; tmp < path.size();tmp++){
+            cout<<path[tmp]<<"";
+        }
+        cout<<endl;
+        return;
+
+    }
+*/
+
+    cout<<"i and m"<<i<<" "<<m<<endl;
+    if (i == m - 1)
+    {
+        for (int k = j; k < n; k++) {
+            cout<<arr[i][j]<<endl;
+            path.push_back(arr[i][j]);
+            //cout<<*((arr + i * n) + k)<<endl;
+        }
+        for (int l = 0; l < path.size(); l++)
+            cout << path[l] << " ";
+        cout << endl;
+        return;
+    }
+    cout<<"j and n"<<j<<" "<<n<<endl;
+    if (j == n - 1)
+    {
+        for (int k = i; k < m; k++) {
+            cout<<arr[i][j]<<endl;
+            path.push_back(arr[i][j]);
+        }
+        for (int l = 0; l < path.size(); l++)
+            cout << path[l] << " ";
+        cout << endl;
+        return;
+    }
+
+
+    //mapping[i][j] = 1;
+    path.push_back(arr[i][j]);
+
+    // Print all the paths that are possible after moving down
+    PrintOut3(arr, i + 1, j, m, n, path);
+
+    // Print all the paths that are possible after moving right
+    PrintOut3(arr, i, j + 1, m, n, path);
+
+    // Print all the paths that are possible after moving diagonal
+    PrintOut3(arr, i + 1, j + 1, m, n, path);
+
+    path.pop_back();
+    //mapping[i][j] = 0;
+}
+
+
+
+
+
+
 // The main function that prints all paths from
 // top left to bottom right in a matrix 'mat' of size mXn
 void PAP(int *mat, int m, int n)
 {
     int *path = new int[m+n];
-
+    //cout<<path<<endl;
     PrintOut(mat, 0, 0, m, n, path, 0);
+}
+
+void Start_Print(int *mx, int m, int n)
+{
+    vector<int> path;
+    vector<vector<int> > mapping(2, vector<int>(3, 0));
+    PrintOut2(mx,mapping, 0, 0, m, n);
+}
+void Start_Print2(int **mx, int m, int n)
+{
+    vector<int> path;
+    //vector<vector<int> > mapping(2, vector<int>(3, 0));
+    PrintOut3(mx, 0, 0, m, n);
 }
 
 void menu(){
@@ -66,8 +189,6 @@ void menu(){
 
 
 
-int hor = 0;
-int ver = 0;
 
 std::string decision(const std::string& user_input){
     std::string key = "null";
@@ -140,20 +261,75 @@ while (!ss.eof()) {
     else if(wordlist.at(0) == "2"){
         if(hor != 0 && ver!=0){
 
-            int map[hor][ver];
             int count = 0;
+
+            int **map = new int*[hor];
+            int map2[hor][ver];
+
+            for (int i = 0; i < hor; i++) {
+
+                // Declare a memory block
+                // of size n
+                map[i] = new int[ver];
+            }
 
             for (int j = 0; j < hor; j++) {
                 for (int i = 0; i < ver; i++) {
-                    count += 1;
-                    map[j][i] = count;
+
+                    map2[i][j] = ++count;
+                    //cout<<map[i][j]<<" ";
 
 
                 }
+                //cout<<endl;
             }
+
+            count = 0;
+            for (int j = 0; j < hor; j++) {
+                for (int i = 0; i < ver; i++) {
+
+                    map[i][j] = ++count;
+                    cout<<map[i][j]<<" ";
+
+
+                }
+                cout<<endl;
+            }
+            //PAP(*map2, hor, ver);
+            cout<<endl;
+            Start_Print2(map, hor, ver);
+            /*
+            int* map = new int[hor*ver];
+
+
+            for (int j = 0; j < hor; j++) {
+                for (int i = 0; i < ver; i++) {
+
+                    *(map + j * ver + j) = ++count;
+
+
+                }
+                cout<<endl;
+            }
+            for (int i = 0; i < hor; i++) {
+                for (int j = 0; j < ver; j++) {
+
+                    // Print values of the
+                    // memory block
+                    cout << *(map + i * ver + j)
+                         << " ";
+                }
+                cout << endl;
+            }
+             */
 
             //int mat[3][3] = { {1, 2, 3}, {4, 5, 6}, { 7, 8, 9 }};
             //PAP(*map, hor, ver);
+
+            //Start_Print(map, hor, ver);
+
+
+
             /*
             vector<vector<int>> map2;
             for (int j = 0; j < hor; j++) {
