@@ -128,8 +128,8 @@ void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
             //cout<<arr[k][j]<<endl;
             path.push_back(arr[k][j]);
         }
-        for (int l = 0; l < path.size(); l++)
-            cout << path[l] << " ";
+        for (int l : path)
+            cout << l << " ";
         cout << endl;
         return;
     }
@@ -267,7 +267,7 @@ while (!ss.eof()) {
             int count = 0;
 
             int **map = new int*[hor];
-            int map2[hor][ver];
+            //int map2[hor][ver];
 
             for (int i = 0; i < hor; i++) {
 
@@ -289,7 +289,7 @@ while (!ss.eof()) {
             }
              */
 
-            count = 0;
+            //count = 0;
             for (int j = 0; j < hor; j++) {
                 for (int i = 0; i < ver; i++) {
 
