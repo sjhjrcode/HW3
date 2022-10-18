@@ -3,4 +3,4 @@ project(HW3)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(HW3 howell_steven_2.cpp)
+add_executable(HW3 howell_steven_3.cpp)

@@ -11,7 +11,7 @@ using namespace std;
 
 int hor = 0;
 int ver = 0;
-
+/*
 void PrintOut(int *arr, int i, int j, int m, int n, int *path, int pi)
 {
 
@@ -87,7 +87,7 @@ void PrintOut2(int *arr, vector<vector<int> > mapping, int i, int j, int m, int 
     mapping[i][j] = 0;
 }
 
-
+*/
 void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
 {
 
@@ -107,12 +107,13 @@ void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
     }
 */
 
-    cout<<"i and m"<<i<<" "<<m<<endl;
+    //cout<<"i and m "<<i<<" "<<m<<endl;
     if (i == m - 1)
     {
+        //cout<<"i if statement triggered"<<endl;
         for (int k = j; k < n; k++) {
-            cout<<arr[i][j]<<endl;
-            path.push_back(arr[i][j]);
+            //cout<<arr[i][k]<<endl;
+            path.push_back(arr[i][k]);
             //cout<<*((arr + i * n) + k)<<endl;
         }
         for (int l = 0; l < path.size(); l++)
@@ -120,12 +121,12 @@ void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
         cout << endl;
         return;
     }
-    cout<<"j and n"<<j<<" "<<n<<endl;
+    //cout<<"j and n "<<j<<" "<<n<<endl;
     if (j == n - 1)
     {
         for (int k = i; k < m; k++) {
-            cout<<arr[i][j]<<endl;
-            path.push_back(arr[i][j]);
+            //cout<<arr[k][j]<<endl;
+            path.push_back(arr[k][j]);
         }
         for (int l = 0; l < path.size(); l++)
             cout << path[l] << " ";
@@ -157,6 +158,7 @@ void PrintOut3(int **arr, int i, int j, int m, int n, vector<int> path = {})
 
 // The main function that prints all paths from
 // top left to bottom right in a matrix 'mat' of size mXn
+/*
 void PAP(int *mat, int m, int n)
 {
     int *path = new int[m+n];
@@ -170,6 +172,7 @@ void Start_Print(int *mx, int m, int n)
     vector<vector<int> > mapping(2, vector<int>(3, 0));
     PrintOut2(mx,mapping, 0, 0, m, n);
 }
+ */
 void Start_Print2(int **mx, int m, int n)
 {
     vector<int> path;
@@ -272,6 +275,7 @@ while (!ss.eof()) {
                 // of size n
                 map[i] = new int[ver];
             }
+            /*
 
             for (int j = 0; j < hor; j++) {
                 for (int i = 0; i < ver; i++) {
@@ -283,20 +287,21 @@ while (!ss.eof()) {
                 }
                 //cout<<endl;
             }
+             */
 
             count = 0;
             for (int j = 0; j < hor; j++) {
                 for (int i = 0; i < ver; i++) {
 
                     map[i][j] = ++count;
-                    cout<<map[i][j]<<" ";
+                    //cout<<map[i][j]<<" ";
 
 
                 }
-                cout<<endl;
+                //cout<<endl;
             }
             //PAP(*map2, hor, ver);
-            cout<<endl;
+            //cout<<endl;
             Start_Print2(map, hor, ver);
             /*
             int* map = new int[hor*ver];
